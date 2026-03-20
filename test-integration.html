@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Integration Test — Dashboard ↔ Bookings</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; padding: 32px; }
+        h1 { font-size: 22px; margin-bottom: 24px; color: #f8fafc; }
+        .test { padding: 12px 16px; margin: 6px 0; border-radius: 8px; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .pass { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); }
+        .fail { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); }
+        .icon { font-size: 18px; flex-shrink: 0; }
+        .pass .icon { color: #22c55e; }
+        .fail .icon { color: #ef4444; }
+        .detail { color: #94a3b8; font-size: 12px; margin-left: auto; }
+        .section { margin: 20px 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; }
+        .summary { margin-top: 24px; padding: 16px 20px; border-radius: 10px; font-size: 16px; font-weight: 600; }
+        .summary.all-pass { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #22c55e; }
+        .summary.has-fail { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #ef4444; }
+        .instructions { background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.3); border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px; line-height: 1.7; color: #a5b4fc; }
+        .instructions strong { color: #e0e7ff; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard ↔ Bookings Integration Test</h1>
+    <div class="instructions">
+        <strong>How to use:</strong> Open this file in your browser. It will automatically:<br>
+        1. Write mock dashboard data to localStorage (rate change + blocked dates)<br>
+        2. Load bookings.html in a hidden iframe<br>
+        3. Verify that prices update and blocked dates are enforced<br>
+        4. Test fresh state (no localStorage) for graceful fallback
+    </div>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        let passCount = 0, failCount = 0;
+
+        function section(title) {
+            const el = document.createElement('div');
+            el.className = 'section';
+            el.textContent = title;
+            results.appendChild(el);
+        }
+
+        function check(label, condition, detail) {
+            const el = document.createElement('div');
+            el.className = 'test ' + (condition ? 'pass' : 'fail');
+            el.innerHTML = '<span class="icon">' + (condition ? '✓' : '✗') + '</span>' +
+                '<span>' + label + '</span>' +
+                (detail && !condition ? '<span class="detail">' + detail + '</span>' : '');
+            results.appendChild(el);
+            if (condition) passCount++; else failCount++;
+        }
+
+        function loadIframe(url) {
+            return new Promise(resolve => {
+                const iframe = document.createElement('iframe');
+                iframe.style.cssText = 'position:fixed;bottom:0;right:0;width:1px;height:1px;opacity:0;pointer-events:none;';
+                iframe.src = url;
+                iframe.onload = () => setTimeout(() => resolve(iframe), 600); // wait for JS to execute
+                document.body.appendChild(iframe);
+            });
+        }
+
+        function getDateStr(offsetDays) {
+            const d = new Date();
+            d.setDate(d.getDate() + offsetDays);
+            return d.toISOString().split('T')[0];
+        }
+
+        async function runTests() {
+            const today    = getDateStr(0);
+            const tomorrow = getDateStr(1);
+            const dayAfter = getDateStr(2);
+            const farDate1 = getDateStr(10);
+            const farDate2 = getDateStr(11);
+
+            // ==========================================
+            // TEST GROUP 1: Price sync
+            // ==========================================
+            section('Step 1 — Write dashboard data to localStorage');
+
+            // Simulate dashboard saving data
+            const mockData = {
+                bookings: [], rooms: [], messages: [], occupancy: [], revenue: [],
+                rates: {
+                    'Ministerial Suite': 280,
+                    'Presidential Suite': 350,
+                    'Executive King': 160,
+                    'Standard Single': 120,  // Changed from 90
+                    'Family Room': 200,
+                    'Executive Twin': 175,   // Changed from 150
+                    'Junior Suite': 140
+                },
+                blocked: {
+                    'Ministerial Suite': [],
+                    'Presidential Suite': [],
+                    'Executive King': [],
+                    'Standard Single': [tomorrow],  // Tomorrow is blocked
+                    'Family Room': [],
+                    'Executive Twin': [],
+                    'Junior Suite': []
+                }
+            };
+
+            localStorage.setItem('lvh_dashboard', JSON.stringify(mockData));
+            const stored = JSON.parse(localStorage.getItem('lvh_dashboard'));
+            check('localStorage written with modified rates',
+                stored.rates['Standard Single'] === 120);
+            check('localStorage written with blocked date for Standard Single',
+                stored.blocked['Standard Single'].includes(tomorrow));
+
+            // ==========================================
+            section('Step 2 — Load bookings.html and verify price sync');
+
+            const iframe1 = await loadIframe('bookings.html');
+            const doc1 = iframe1.contentDocument;
+
+            // Check Standard Single card price label
+            const stdCard = doc1.getElementById('standard');
+            const priceLabel = stdCard ? stdCard.querySelector('.room-card-price') : null;
+            const priceTxt = priceLabel ? priceLabel.textContent : '';
+            check('Standard Single card shows "From $120/night"',
+                priceTxt === 'From $120/night',
+                'got: "' + priceTxt + '"');
+
+            // Check button data-price
+            const stdBtn = stdCard ? stdCard.querySelector('.room-book-btn') : null;
+            const btnPrice = stdBtn ? stdBtn.dataset.price : '';
+            check('Standard Single button data-price is "$120/night"',
+                btnPrice === '$120/night',
+                'got: "' + btnPrice + '"');
+
+            // Check Executive Twin was also updated
+            const twinCard = doc1.getElementById('executive-twin');
+            const twinLabel = twinCard ? twinCard.querySelector('.room-card-price') : null;
+            const twinTxt = twinLabel ? twinLabel.textContent : '';
+            check('Executive Twin card shows "From $175/night"',
+                twinTxt === 'From $175/night',
+                'got: "' + twinTxt + '"');
+
+            // Check an unchanged room stays the same
+            const ministerial = doc1.getElementById('ministerial');
+            const minLabel = ministerial ? ministerial.querySelector('.room-card-price') : null;
+            const minTxt = minLabel ? minLabel.textContent : '';
+            check('Ministerial Suite unchanged at "From $280/night"',
+                minTxt === 'From $280/night',
+                'got: "' + minTxt + '"');
+
+            // ==========================================
+            section('Step 3 — Open modal and verify price in header');
+
+            // Click Book Now on Standard Single
+            if (stdBtn) stdBtn.click();
+            await new Promise(r => setTimeout(r, 400));
+
+            const modalPrice = doc1.getElementById('bmRoomPrice');
+            const modalPriceTxt = modalPrice ? modalPrice.textContent : '';
+            check('Modal shows "$120/night"',
+                modalPriceTxt === '$120/night',
+                'got: "' + modalPriceTxt + '"');
+
+            const modalRoom = doc1.getElementById('bmRoomName');
+            const modalRoomTxt = modalRoom ? modalRoom.textContent : '';
+            check('Modal room name is "Standard Single Room"',
+                modalRoomTxt === 'Standard Single Room');
+
+            // ==========================================
+            section('Step 4 — Blocked date warning (today→day-after-tomorrow)');
+
+            // Set dates: check-in=today, check-out=dayAfter (range covers tomorrow which is blocked)
+            const bmCheckIn = doc1.getElementById('bmCheckIn');
+            const bmCheckOut = doc1.getElementById('bmCheckOut');
+
+            if (bmCheckIn) { bmCheckIn.value = today; bmCheckIn.dispatchEvent(new Event('change')); }
+            await new Promise(r => setTimeout(r, 200));
+            if (bmCheckOut) { bmCheckOut.value = dayAfter; bmCheckOut.dispatchEvent(new Event('change')); }
+            await new Promise(r => setTimeout(r, 200));
+
+            const notice = doc1.getElementById('bmBlockedNotice');
+            const noticeVisible = notice && getComputedStyle(notice).display !== 'none'
+                && notice.style.display !== 'none' ? false : true;
+            // Actually check the style.display directly since it's inline
+            const noticeDisplay = notice ? notice.style.display : 'none';
+            check('Blocked notice is visible (display: flex)',
+                noticeDisplay === 'flex',
+                'display: "' + noticeDisplay + '"');
+
+            // Try to submit — fill required fields
+            const bmName = doc1.getElementById('bmName');
+            const bmEmail = doc1.getElementById('bmEmail');
+            const bmPhone = doc1.getElementById('bmPhone');
+            if (bmName) bmName.value = 'Test Guest';
+            if (bmEmail) bmEmail.value = 'test@test.com';
+            if (bmPhone) bmPhone.value = '+256700000000';
+
+            // Click submit
+            const submitBtn = doc1.getElementById('bmSubmitBtn');
+            if (submitBtn) submitBtn.click();
+            await new Promise(r => setTimeout(r, 500));
+
+            // Form should still be visible (submission blocked)
+            const bmForm = doc1.getElementById('bookingModalForm');
+            const formDisplay = bmForm ? bmForm.style.display : 'none';
+            check('Form submission blocked (form still visible)',
+                formDisplay !== 'none',
+                'form display: "' + formDisplay + '"');
+
+            const bmSuccess = doc1.getElementById('bmSuccess');
+            const successDisplay = bmSuccess ? bmSuccess.style.display : '';
+            check('Success message NOT shown',
+                successDisplay === 'none' || successDisplay === '',
+                'success display: "' + successDisplay + '"');
+
+            // ==========================================
+            section('Step 5 — Change to unblocked dates → warning disappears, submit works');
+
+            // Set dates far in the future (unblocked)
+            if (bmCheckIn) { bmCheckIn.value = farDate1; bmCheckIn.dispatchEvent(new Event('change')); }
+            await new Promise(r => setTimeout(r, 200));
+            if (bmCheckOut) { bmCheckOut.value = farDate2; bmCheckOut.dispatchEvent(new Event('change')); }
+            await new Promise(r => setTimeout(r, 200));
+
+            const noticeAfter = notice ? notice.style.display : '';
+            check('Blocked notice hidden for unblocked dates',
+                noticeAfter === 'none',
+                'display: "' + noticeAfter + '"');
+
+            // Submit should work now
+            if (submitBtn) submitBtn.click();
+            await new Promise(r => setTimeout(r, 500));
+
+            const formAfterSubmit = bmForm ? bmForm.style.display : '';
+            const successAfterSubmit = bmSuccess ? bmSuccess.style.display : '';
+            check('Form hidden after successful submit',
+                formAfterSubmit === 'none',
+                'form display: "' + formAfterSubmit + '"');
+            check('Success message shown',
+                successAfterSubmit === 'flex',
+                'success display: "' + successAfterSubmit + '"');
+
+            // ==========================================
+            section('Step 6 — Fresh context (no localStorage) → hardcoded defaults');
+
+            // Remove dashboard data
+            localStorage.removeItem('lvh_dashboard');
+            check('localStorage cleared', !localStorage.getItem('lvh_dashboard'));
+
+            // Load fresh iframe
+            const iframe2 = await loadIframe('bookings.html?nocache=' + Date.now());
+            const doc2 = iframe2.contentDocument;
+
+            const freshCard = doc2.getElementById('standard');
+            const freshLabel = freshCard ? freshCard.querySelector('.room-card-price') : null;
+            const freshTxt = freshLabel ? freshLabel.textContent : '';
+            check('No localStorage → Standard Single shows hardcoded "From $90/night"',
+                freshTxt === 'From $90/night',
+                'got: "' + freshTxt + '"');
+
+            const freshBtn = freshCard ? freshCard.querySelector('.room-book-btn') : null;
+            const freshBtnPrice = freshBtn ? freshBtn.dataset.price : '';
+            check('No localStorage → button data-price is "$90/night"',
+                freshBtnPrice === '$90/night',
+                'got: "' + freshBtnPrice + '"');
+
+            // Twin should also be back to original
+            const freshTwin = doc2.getElementById('executive-twin');
+            const freshTwinLabel = freshTwin ? freshTwin.querySelector('.room-card-price') : null;
+            const freshTwinTxt = freshTwinLabel ? freshTwinLabel.textContent : '';
+            check('No localStorage → Executive Twin shows hardcoded "From $150/night"',
+                freshTwinTxt === 'From $150/night',
+                'got: "' + freshTwinTxt + '"');
+
+            // ==========================================
+            // SUMMARY
+            // ==========================================
+            const summary = document.createElement('div');
+            summary.className = 'summary ' + (failCount === 0 ? 'all-pass' : 'has-fail');
+            summary.textContent = (failCount === 0 ? '✓ ' : '✗ ') +
+                passCount + ' passed, ' + failCount + ' failed out of ' + (passCount + failCount) + ' checks';
+            results.appendChild(summary);
+
+            // Clean up iframes
+            iframe1.remove();
+            iframe2.remove();
+        }
+
+        runTests().catch(err => {
+            const el = document.createElement('div');
+            el.className = 'test fail';
+            el.innerHTML = '<span class="icon">✗</span><span>Test runner error: ' + err.message + '</span>';
+            results.appendChild(el);
+        });
+    </script>
+</body>
+</html>

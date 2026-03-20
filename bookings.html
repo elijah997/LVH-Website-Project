@@ -1,0 +1,573 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodation &amp; Rooms | Lake Victoria Hotel</title>
+    <meta name="description" content="Browse luxury rooms and suites at Lake Victoria Hotel — from standard singles to the Presidential Suite.">
+    <meta name="theme-color" content="#2c6e49">
+    <meta property="og:title" content="Accommodation &amp; Rooms | Lake Victoria Hotel">
+    <meta property="og:description" content="Browse luxury rooms and suites at Lake Victoria Hotel — from standard singles to the Presidential Suite.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.lvhotel.co.ug/bookings.html">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=80">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">LVH</div>
+            <div class="preloader-tagline">Lake Victoria Hotel</div>
+            <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+        </div>
+    </div>
+    <div id="scroll-progress"></div>
+
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left"><a href="https://www.google.com/maps/place/Lake+Victoria+Hotel/@0.0612,32.4435,17z" target="_blank" rel="noopener" class="top-bar-map-link"><i class="fas fa-map-marker-alt"></i> P.O.BOX 15, ENTEBBE &nbsp;|&nbsp; Plot 23-31, Circular Road, Entebbe</a></div>
+            <div class="top-bar-right">
+                <span><i class="fas fa-phone"></i> <a href="tel:+256312310100" class="top-bar-tel">+256-312310100</a> / <a href="tel:+256414351600" class="top-bar-tel">+256-414-351600</a></span>
+                <span><i class="fas fa-fax"></i> Fax: +256-312310404</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="site-logo-link"><img src="assets/Hotel_Logo.png" alt="Lake Victoria Hotel" class="site-logo-img"></a>
+                <nav class="main-nav" id="mainNav">
+                    <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu"><i class="fas fa-times"></i></button>
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li class="has-dropdown">
+                            <a href="about.html" class="nav-link">About Us <i class="fas fa-chevron-down fa-xs"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="about.html">About Lake Victoria Hotel</a></li>
+                                <li><a href="about.html#management">Management Team</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="offers.html" class="nav-link">Offers</a></li>
+                        <li class="has-dropdown">
+                            <a href="bookings.html" class="nav-link">Bookings <i class="fas fa-chevron-down fa-xs"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="#ministerial">Ministerial Suite</a></li>
+                                <li><a href="#presidential">Presidential Suite</a></li>
+                                <li><a href="#executive-king">Executive King</a></li>
+                                <li><a href="#standard">Standard Single Room</a></li>
+                                <li><a href="#family">Family Room</a></li>
+                                <li><a href="#executive-twin">Executive Twin Room</a></li>
+                                <li><a href="#junior">Junior Suite</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-dropdown">
+                            <a href="dining.html" class="nav-link">Dining <i class="fas fa-chevron-down fa-xs"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="dining.html#buffet">Buffet Restaurant</a></li>
+                                <li><a href="dining.html#menu">Menu</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-overlay" id="navOverlay"></div>
+                <a href="bookings.html" class="nav-book-btn" aria-label="Book Now">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Check Availability</span>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=80')">
+        <div class="page-banner-overlay"></div>
+        <div class="container">
+            <div class="page-banner-content">
+                <span class="label">Rooms &amp; Suites</span>
+                <h1>Accommodation</h1>
+                <nav class="breadcrumb" aria-label="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span><i class="fas fa-chevron-right fa-xs"></i></span>
+                    <span>Bookings</span>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline Booking Form -->
+    <section class="booking-inline-section" id="booking-form">
+        <div class="container">
+            <div class="booking-card">
+                <div class="booking-card-header">
+                    <div class="booking-card-header-top">
+                        <div class="booking-card-title"><i class="fas fa-calendar-check"></i><span>Check Availability</span></div>
+                        <div class="booking-live-clock" id="bookingLiveClock">
+                            <i class="fas fa-clock"></i>
+                            <span class="blc-time" id="blcTime">--:--:-- --</span>
+                            <span class="blc-sep">|</span>
+                            <span class="blc-date" id="blcDate">--- --, ----</span>
+                            <span class="blc-tz">EAT</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="avail-form">
+                    <div class="avail-group">
+                        <label for="checkIn">Check In</label>
+                        <input type="date" class="avail-input" id="checkIn" name="checkIn">
+                    </div>
+                    <div class="avail-group">
+                        <label for="checkOut">Check Out</label>
+                        <input type="date" class="avail-input" id="checkOut" name="checkOut">
+                    </div>
+                    <div class="avail-group">
+                        <label>Adults</label>
+                        <select class="avail-input" name="adults">
+                            <option>1</option><option>2</option><option>3</option><option>4</option>
+                        </select>
+                    </div>
+                    <div class="avail-group">
+                        <label>Children</label>
+                        <select class="avail-input" name="children">
+                            <option>0</option><option>1</option><option>2</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-check">CHECK NOW</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Cards -->
+    <section class="accommodation-section rooms-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="label">Rooms &amp; Suites</span>
+                <h2>Choose Your Room</h2>
+                <p>From elegant suites to comfortable singles — find the perfect room for your stay</p>
+            </div>
+            <div class="room-cards-grid">
+                <div class="room-card" id="ministerial">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Ministerial Suite" loading="lazy">
+                        <span class="room-card-price">From $280/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Ministerial Suite</h3>
+                        <p>Lavish suite with panoramic lake views, a private lounge area, and premium personalised amenities.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> King Bed</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 65 m²</span>
+                            <span><i class="fas fa-users"></i> 2 Guests</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Ministerial Suite" data-price="$280/night">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card" id="presidential">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80" alt="Presidential Suite" loading="lazy">
+                        <span class="room-card-price">From $350/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Presidential Suite</h3>
+                        <p>Our most prestigious suite — butler service, private terrace, and exquisitely crafted décor throughout.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> King Bed</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 90 m²</span>
+                            <span><i class="fas fa-users"></i> 2 Guests</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Presidential Suite" data-price="$350/night">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card" id="executive-king">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80" alt="Executive King" loading="lazy">
+                        <span class="room-card-price">From $160/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Executive King</h3>
+                        <p>Spacious executive room with a work desk, lake view, minibar, and all modern comforts for business travellers.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> King Bed</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 42 m²</span>
+                            <span><i class="fas fa-users"></i> 2 Guests</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Executive King" data-price="$160/night">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card" id="standard">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80" alt="Standard Single" loading="lazy">
+                        <span class="room-card-price">From $90/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Standard Single Room</h3>
+                        <p>Comfortable and well-appointed single room with all essential amenities for an excellent night's rest.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> Single Bed</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 22 m²</span>
+                            <span><i class="fas fa-users"></i> 1 Guest</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Standard Single Room" data-price="$90/night">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card" id="family">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80" alt="Family Room" loading="lazy">
+                        <span class="room-card-price">From $200/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Family Room</h3>
+                        <p>Generous family suite with interconnected rooms and multiple sleeping arrangements — perfect for families.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> Multiple Beds</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 55 m²</span>
+                            <span><i class="fas fa-users"></i> 4 Guests</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Family Room" data-price="$200/night">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card" id="executive-twin">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80" alt="Executive Twin" loading="lazy">
+                        <span class="room-card-price">From $150/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Executive Twin Room</h3>
+                        <p>Twin-bedded executive room ideal for colleagues travelling together, with full business amenities.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> Twin Beds</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 38 m²</span>
+                            <span><i class="fas fa-users"></i> 2 Guests</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Executive Twin Room" data-price="$150/night">Book Now</button>
+                    </div>
+                </div>
+                <div class="room-card" id="junior">
+                    <div class="room-card-img">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80" alt="Junior Suite" loading="lazy">
+                        <span class="room-card-price">From $140/night</span>
+                    </div>
+                    <div class="room-card-body">
+                        <h3>Junior Suite</h3>
+                        <p>A refined junior suite with a separate sitting area, rich furnishings, and beautiful views of the grounds.</p>
+                        <div class="room-card-features">
+                            <span><i class="fas fa-bed"></i> Queen Bed</span>
+                            <span><i class="fas fa-expand-arrows-alt"></i> 38 m²</span>
+                            <span><i class="fas fa-users"></i> 2 Guests</span>
+                        </div>
+                        <button class="btn btn-gold room-book-btn" data-room="Junior Suite" data-price="$140/night">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Icons -->
+    <section class="accommodation-section amenities-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="label">Included in Every Room</span>
+                <h2>Premium Amenities</h2>
+                <p>Every room at Lake Victoria Hotel is equipped with the finest amenities for your comfort</p>
+            </div>
+            <div class="icons-grid">
+                <div class="icon-box"><i class="fas fa-wifi"></i><span>Free WiFi</span></div>
+                <div class="icon-box"><i class="fas fa-car"></i><span>Car Parking</span></div>
+                <div class="icon-box"><i class="fas fa-concierge-bell"></i><span>Room Service</span></div>
+                <div class="icon-box"><i class="fas fa-snowflake"></i><span>Air Con</span></div>
+                <div class="icon-box"><i class="fas fa-tv"></i><span>Digital TV</span></div>
+                <div class="icon-box"><i class="fas fa-suitcase-rolling"></i><span>Luggage</span></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-main"><div class="container"><div class="footer-grid">
+            <div class="footer-col footer-brand">
+                <div class="footer-logo">Lake Victoria<br><span>Hotel</span></div>
+                <div class="footer-logo-ornament"><svg viewBox="0 0 120 12" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="6" x2="44" y2="6" stroke="#c9a84c" stroke-width="1"/><circle cx="60" cy="6" r="4" fill="none" stroke="#c9a84c" stroke-width="1"/><line x1="76" y1="6" x2="120" y2="6" stroke="#c9a84c" stroke-width="1"/></svg></div>
+                <p>A 4-star hotel in Entebbe, Uganda, with a rich history dating back to 1948. World-class amenities on the shores of Lake Victoria.</p>
+                <div class="footer-social">
+                    <a href="https://wa.me/256772268040" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="TripAdvisor" id="sfTripAdvisor"><img src="assets/tripadvisor-badge.png" alt="TripAdvisor" style="width:20px;height:20px;object-fit:contain;"></a>
+                </div>
+            </div>
+            <div class="footer-col"><h4>Quick Links</h4><ul>
+                <li><a href="index.html"><i class="fas fa-chevron-right fa-xs"></i> Home</a></li>
+                <li><a href="about.html"><i class="fas fa-chevron-right fa-xs"></i> About Us</a></li>
+                <li><a href="offers.html"><i class="fas fa-chevron-right fa-xs"></i> Offers</a></li>
+                <li><a href="bookings.html"><i class="fas fa-chevron-right fa-xs"></i> Bookings</a></li>
+                <li><a href="gallery.html"><i class="fas fa-chevron-right fa-xs"></i> Gallery</a></li>
+                <li><a href="contact.html"><i class="fas fa-chevron-right fa-xs"></i> Contact</a></li>
+            </ul></div>
+            <div class="footer-col"><h4>Room Types</h4><ul>
+                <li><a href="#ministerial"><i class="fas fa-chevron-right fa-xs"></i> Ministerial Suite</a></li>
+                <li><a href="#presidential"><i class="fas fa-chevron-right fa-xs"></i> Presidential Suite</a></li>
+                <li><a href="#executive-king"><i class="fas fa-chevron-right fa-xs"></i> Executive King</a></li>
+                <li><a href="#standard"><i class="fas fa-chevron-right fa-xs"></i> Standard Single</a></li>
+                <li><a href="#family"><i class="fas fa-chevron-right fa-xs"></i> Family Room</a></li>
+                <li><a href="#junior"><i class="fas fa-chevron-right fa-xs"></i> Junior Suite</a></li>
+            </ul></div>
+            <div class="footer-col"><h4>Contact Info</h4><ul class="contact-list">
+                <li><a href="https://www.google.com/maps/place/Lake+Victoria+Hotel/@0.0612,32.4435,17z" target="_blank" rel="noopener" class="footer-map-link"><i class="fas fa-map-marker-alt"></i> P.O.BOX 15, ENTEBBE<br><span>Plot 23-31, Circular Road</span></a></li>
+                <li><a href="tel:+256312310100" class="footer-tel"><i class="fas fa-phone"></i> +256-312310100</a></li>
+                <li><a href="tel:+256414351600" class="footer-tel"><i class="fas fa-phone"></i> +256-414-351600</a></li>
+                <li><a href="mailto:reservations@lvhotel.co.ug" class="footer-tel"><i class="fas fa-envelope"></i> reservations@lvhotel.co.ug</a></li>
+                <li><a href="https://wa.me/256772268040" target="_blank" rel="noopener" class="footer-tel"><i class="fab fa-whatsapp"></i> +256-772268040</a></li>
+            </ul></div>
+        </div></div></div>
+        <div class="footer-bottom"><div class="container">
+            <p>&copy; 2025 Lake Victoria Hotel. All Rights Reserved. &nbsp;|&nbsp; Entebbe, Uganda</p>
+        </div></div>
+    </footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg class="progress-ring" width="46" height="46" viewBox="0 0 46 46">
+            <circle cx="23" cy="23" r="20" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+            <circle id="progressRingFill" cx="23" cy="23" r="20" fill="none" stroke="#c9a84c" stroke-width="2" stroke-dasharray="125.7" stroke-dashoffset="125.7" stroke-linecap="round" transform="rotate(-90 23 23)"/>
+        </svg>
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <div class="mobile-book-bar" id="mobileBookBar">
+        <span>Book Your Stay</span>
+        <a href="#booking-form" class="btn btn-gold">BOOK NOW</a>
+    </div>
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-modal-overlay" id="bookingModalOverlay"></div>
+        <div class="booking-modal-card">
+            <button class="booking-modal-close" id="bookingModalClose">&times;</button>
+            <div class="booking-modal-header">
+                <h3 id="bmRoomName">Room Name</h3>
+                <span class="booking-modal-price" id="bmRoomPrice">$0/night</span>
+                <span class="bm-surcharge" id="bmSurcharge" style="display:none">+ extra adult surcharge</span>
+            </div>
+            <form class="booking-modal-form" id="bookingModalForm">
+                <div class="bm-row">
+                    <div class="bm-group">
+                        <label for="bmCheckIn">Check In</label>
+                        <input type="date" id="bmCheckIn" name="checkin" required>
+                    </div>
+                    <div class="bm-group">
+                        <label for="bmCheckOut">Check Out</label>
+                        <input type="date" id="bmCheckOut" name="checkout" required>
+                    </div>
+                </div>
+                <div class="bm-row">
+                    <div class="bm-group">
+                        <label for="bmAdults">Adults</label>
+                        <select id="bmAdults" name="adults">
+                            <option>1</option><option>2</option>
+                        </select>
+                    </div>
+                    <div class="bm-group">
+                        <label for="bmChildren">Children</label>
+                        <select id="bmChildren" name="children">
+                            <option>0</option><option>1</option><option>2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bm-child-ages" id="bmChildAges" style="display:none">
+                    <div class="bm-child-ages-header">
+                        <i class="fas fa-child"></i>
+                        <span>Please enter each child's age</span>
+                    </div>
+                    <div class="bm-child-ages-list" id="bmChildAgesList"></div>
+                    <div class="bm-child-ages-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="bmChildAgesInfo">Children below 10 years stay free. Ages 10+ are charged <strong>$30 extra per night</strong>.</span>
+                    </div>
+                    <div class="bm-child-age-warn" id="bmChildAgeWarn" style="display:none">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Please select the age for each child before continuing.</span>
+                    </div>
+                </div>
+                <div class="bm-group">
+                    <label for="bmName">Full Name</label>
+                    <input type="text" id="bmName" name="name" placeholder="Your full name" required>
+                </div>
+                <div class="bm-row">
+                    <div class="bm-group">
+                        <label for="bmEmail">Email Address</label>
+                        <input type="email" id="bmEmail" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="bm-group">
+                        <label for="bmPhone">Telephone</label>
+                        <input type="tel" id="bmPhone" name="phone" placeholder="+256 ..." required>
+                    </div>
+                </div>
+                <div class="bm-blocked-notice" id="bmBlockedNotice" style="display:none">
+                    <div class="bm-blocked-icon"><i class="fas fa-calendar-times"></i></div>
+                    <div class="bm-blocked-body">
+                        <strong>Room Unavailable for Selected Dates</strong>
+                        <p>The following dates are not available for this room type:</p>
+                        <div class="bm-blocked-dates" id="bmBlockedDatesList"></div>
+                        <p class="bm-blocked-hint"><i class="fas fa-lightbulb"></i> Please adjust your check-in or check-out dates, or contact us at <a href="tel:+256312310100">+256-312-310-100</a> for assistance.</p>
+                    </div>
+                </div>
+                <div class="bm-send-error" id="bmSendError" style="display:none">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Could not send your booking. Please try again or call us at +256-312310100.</span>
+                </div>
+                <div class="bm-payment-notice">
+                    <i class="fas fa-info-circle"></i> All payments are made at the premises/Hotel.
+                </div>
+                <button type="submit" class="btn btn-gold bm-submit" id="bmSubmitBtn">
+                    <i class="fas fa-check-circle"></i> Confirm Booking
+                </button>
+            </form>
+            <!-- Confirmation receipt — shown before sending -->
+            <div class="bm-receipt" id="bmReceipt" style="display:none">
+                <div class="bm-receipt-header">
+                    <i class="fas fa-file-invoice"></i>
+                    <h4>Review Your Booking</h4>
+                    <p>Please confirm the details below are correct before submitting.</p>
+                </div>
+                <div class="bm-receipt-card">
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Room</span>
+                        <span class="bm-receipt-value" id="rcRoom"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Rate</span>
+                        <span class="bm-receipt-value" id="rcRate"></span>
+                    </div>
+                    <div class="bm-receipt-section bm-receipt-surcharge" id="rcSurchargeRow" style="display:none">
+                        <span class="bm-receipt-label">Extra Adult</span>
+                        <span class="bm-receipt-value bm-receipt-extra" id="rcSurcharge"></span>
+                    </div>
+                    <div class="bm-receipt-divider"></div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Check-in</span>
+                        <span class="bm-receipt-value" id="rcCheckIn"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Check-out</span>
+                        <span class="bm-receipt-value" id="rcCheckOut"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Duration</span>
+                        <span class="bm-receipt-value" id="rcNights"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Guests</span>
+                        <span class="bm-receipt-value" id="rcGuests"></span>
+                    </div>
+                    <div class="bm-receipt-child-note" id="rcChildNote" style="display:none">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="rcChildNoteText">Children below 10 yrs stay free. Children 10 yrs+ are charged $30 extra/night.</span>
+                    </div>
+                    <div class="bm-receipt-divider"></div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Name</span>
+                        <span class="bm-receipt-value" id="rcName"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Email</span>
+                        <span class="bm-receipt-value" id="rcEmail"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Phone</span>
+                        <span class="bm-receipt-value" id="rcPhone"></span>
+                    </div>
+                    <div class="bm-receipt-divider"></div>
+                    <div class="bm-receipt-billing-title">Billing Summary</div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Room Subtotal</span>
+                        <span class="bm-receipt-value" id="rcSubtotal"></span>
+                    </div>
+                    <div class="bm-receipt-section bm-receipt-surcharge" id="rcSurchargeTotal" style="display:none">
+                        <span class="bm-receipt-label">Extra Adult Subtotal</span>
+                        <span class="bm-receipt-value bm-receipt-extra" id="rcSurchargeAmt"></span>
+                    </div>
+                    <div class="bm-receipt-section bm-receipt-surcharge" id="rcChildChargeRow" style="display:none">
+                        <span class="bm-receipt-label">Children (10+ yrs)</span>
+                        <span class="bm-receipt-value bm-receipt-extra" id="rcChildChargeAmt"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">VAT (18%)</span>
+                        <span class="bm-receipt-value" id="rcVat"></span>
+                    </div>
+                    <div class="bm-receipt-section">
+                        <span class="bm-receipt-label">Service Charge (5%)</span>
+                        <span class="bm-receipt-value" id="rcService"></span>
+                    </div>
+                    <div class="bm-receipt-divider"></div>
+                    <div class="bm-receipt-section bm-receipt-total">
+                        <span class="bm-receipt-label">Total</span>
+                        <span class="bm-receipt-value" id="rcTotal"></span>
+                    </div>
+                </div>
+                <div class="bm-payment-notice">
+                    <i class="fas fa-info-circle"></i> All payments are made at the premises/Hotel.
+                </div>
+                <div class="bm-receipt-actions">
+                    <button type="button" class="btn bm-receipt-back" id="rcBackBtn">
+                        <i class="fas fa-arrow-left"></i> Edit Details
+                    </button>
+                    <button type="button" class="btn bm-receipt-download" id="rcDownloadBtn">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <button type="button" class="btn btn-gold bm-receipt-confirm" id="rcConfirmBtn">
+                        <i class="fas fa-paper-plane"></i> Submit Booking
+                    </button>
+                </div>
+            </div>
+            <div class="bm-success" id="bmSuccess">
+                <i class="fas fa-check-circle"></i>
+                <h4>Booking Request Submitted!</h4>
+                <p>Thank you. Our reservations team will confirm your booking within 24 hours via email.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- TripAdvisor Badge Modal -->
+    <div class="ta-modal-overlay" id="taModalOverlay"></div>
+    <div class="ta-modal" id="taModal">
+        <button class="ta-modal-close" id="taModalClose">&times;</button>
+        <img src="assets/tripadvisor-badge.png" alt="TripAdvisor Badge — Scan QR Code">
+        <p>Scan the QR code to review us on TripAdvisor</p>
+    </div>
+
+    <!-- Feedback Widget -->
+    <button class="fb-float-btn" id="feedbackBtn" title="Leave Feedback"><i class="fas fa-comment-alt"></i></button>
+    <div class="fb-overlay" id="feedbackOverlay"></div>
+    <div class="fb-modal" id="feedbackModal">
+        <button class="fb-close" id="feedbackClose">&times;</button>
+        <div class="fb-content" id="feedbackForm">
+            <h3>How was your experience?</h3>
+            <p>We'd love to hear from you</p>
+            <div class="fb-stars" id="fbStars"></div>
+            <div class="fb-rating-label" id="fbRatingLabel"></div>
+            <input type="text" id="fbName" placeholder="Your name *">
+            <input type="text" id="fbRoomRef" placeholder="Room No. or Walk-in (e.g. Room 12 / Walk-in)">
+            <input type="email" id="fbEmail" placeholder="Email (optional)">
+            <textarea id="fbMessage" rows="3" placeholder="Tell us about your experience..."></textarea>
+            <button class="btn btn-gold fb-submit" id="fbSubmitBtn">Submit Feedback</button>
+        </div>
+        <div class="fb-success" id="feedbackSuccess" style="display:none">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank you!</h3>
+            <p>Your feedback has been received.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/site-config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

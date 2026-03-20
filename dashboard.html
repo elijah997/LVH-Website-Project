@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Lake Victoria Hotel</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Mobile Topbar -->
+    <div class="db-topbar">
+        <button class="db-topbar-hamburger" id="dbMenuToggle" aria-label="Toggle sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <span class="db-topbar-title">LVH Admin</span>
+        <div class="db-topbar-avatar">AD</div>
+    </div>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="db-sidebar-overlay" id="dbSidebarOverlay"></div>
+
+    <div class="db-layout">
+
+        <!-- Sidebar -->
+        <aside class="db-sidebar" id="dbSidebar">
+            <div class="db-sidebar-header">
+                <div class="db-sidebar-logo">Lake Victoria <span>Hotel</span></div>
+                <span class="db-sidebar-label">Admin Panel</span>
+            </div>
+            <nav class="db-sidebar-nav">
+                <a class="db-nav-item active" data-section="overview">
+                    <i class="fas fa-th-large"></i> Overview
+                </a>
+                <a class="db-nav-item" data-section="rooms">
+                    <i class="fas fa-bed"></i> Rooms
+                </a>
+                <a class="db-nav-item" data-section="messages">
+                    <i class="fas fa-envelope"></i> Messages
+                    <span class="db-nav-badge" id="dbUnreadCount">0</span>
+                </a>
+                <a class="db-nav-item" data-section="analytics">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </a>
+                <a class="db-nav-item" data-section="audit">
+                    <i class="fas fa-clipboard-list"></i> Audit & Site
+                </a>
+                <a class="db-nav-item" data-section="reports">
+                    <i class="fas fa-file-alt"></i> Reports
+                </a>
+                <a class="db-nav-item" data-section="homepage">
+                    <i class="fas fa-home"></i> Home Page
+                </a>
+                <a class="db-nav-item" data-section="offers">
+                    <i class="fas fa-star"></i> Offers Page
+                </a>
+                <a class="db-nav-item" data-section="about">
+                    <i class="fas fa-users"></i> About Us
+                </a>
+                <a class="db-nav-item" data-section="dining">
+                    <i class="fas fa-utensils"></i> Dining Menu
+                </a>
+            </nav>
+            <div class="db-sidebar-footer">
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="db-main">
+
+            <!-- Unsaved Changes Banner -->
+            <div id="dbUnsavedBanner" style="display:none;align-items:center;gap:12px;background:#7c5a00;color:#fff8e1;padding:10px 24px;font-size:0.85rem;border-bottom:2px solid #c9a84c;position:sticky;top:0;z-index:200;">
+                <i class="fas fa-exclamation-triangle" style="color:#c9a84c;font-size:1rem;flex-shrink:0"></i>
+                <span>You have <strong>unsaved changes</strong>. Click <strong>Save to Site</strong> to make them permanent across all browsers and devices.</span>
+                <button onclick="window._lvhDoSaveConfig(this)" style="margin-left:auto;background:#c9a84c;color:#1a1a1a;border:none;padding:6px 14px;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;">
+                    <i class="fas fa-save"></i> Save to Site Now
+                </button>
+            </div>
+
+            <!-- ====== OVERVIEW SECTION ====== -->
+            <section class="db-section active" id="sec-overview">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Website Analytics</h1>
+                        <p id="dbDateDisplay"></p>
+                    </div>
+                    <div class="db-header-actions">
+                        <button class="db-btn db-btn-primary db-btn-sm" id="dbFullBackupBtn" title="Download full website backup as ZIP">
+                            <i class="fas fa-file-archive"></i> Full Backup
+                        </button>
+                        <button class="db-btn db-btn-gold db-btn-sm" id="dbSaveConfigBtn" title="Export current settings to site-config.js (permanent save)">
+                            <i class="fas fa-save"></i> Save to Site
+                        </button>
+                        <button class="db-btn db-btn-outline db-btn-sm" id="dbExportBtn" title="Download backup of all dashboard data">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="db-btn db-btn-outline db-btn-sm" id="dbImportBtn" title="Restore dashboard data from a backup file">
+                            <i class="fas fa-upload"></i> Import
+                        </button>
+                        <input type="file" id="dbImportFile" accept=".json" style="display:none">
+                        <button class="db-btn db-btn-outline" id="dbRefreshBtn">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="db-card db-section-filter">
+                    <div class="db-card-body">
+                        <div class="db-filter-pills" id="dbOverviewDateFilter">
+                            <button class="db-pill" data-range="7">7 Days</button>
+                            <button class="db-pill active" data-range="30">30 Days</button>
+                            <button class="db-pill" data-range="all">All Time</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 1: 6 Stat Cards -->
+                <div class="db-stats-grid db-stats-grid-6" id="dbOverviewStats">
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon green"><i class="fas fa-eye"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="statSiteVisits">0</h3>
+                            <p>Total Site Visits</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon gold"><i class="fas fa-mouse-pointer"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="statBookClicks">0</h3>
+                            <p>Book Now Clicks</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon blue"><i class="fas fa-envelope"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="statEmailsSent">0</h3>
+                            <p>Emails Sent</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon purple"><i class="fas fa-search"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="statAvailChecks">0</h3>
+                            <p>Availability Checks</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon teal"><i class="fas fa-comment-dots"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="statEnquiries">0</h3>
+                            <p>Contact Enquiries</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon gold"><i class="fas fa-star"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="statGuestRating">0</h3>
+                            <p>Guest Rating</p>
+                            <div class="db-rating-stars" id="dbRatingStars"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Charts (Site Activity + Top Pages Donut) -->
+                <div class="db-charts-row">
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <h3>Site Activity</h3>
+                        </div>
+                        <div class="db-card-body">
+                            <div class="db-chart-wrap">
+                                <canvas id="dbOverviewActivityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <h3>Top Pages</h3>
+                        </div>
+                        <div class="db-card-body">
+                            <div class="db-donut-wrap">
+                                <div class="db-donut" id="dbOverviewDonut">
+                                    <div class="db-donut-center">
+                                        <strong id="dbOverviewDonutTotal">0</strong>
+                                        <span>Views</span>
+                                    </div>
+                                </div>
+                                <div class="db-donut-legend" id="dbOverviewDonutLegend"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Visitor Locations + Recent Activity -->
+                <div class="db-two-col">
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <h3>Visitor IPs</h3>
+                        </div>
+                        <div class="db-card-body" style="padding:12px 24px 24px">
+                            <div id="dbVisitorLocations"></div>
+                        </div>
+                    </div>
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <h3>Recent Activity</h3>
+                            <a class="db-nav-link" data-section="audit" style="font-size:0.8rem; cursor:pointer; color:var(--green);">View All</a>
+                        </div>
+                        <div class="db-card-body" style="padding:0">
+                            <div class="db-activity-list" id="dbRecentActivity"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== ROOMS SECTION ====== -->
+            <section class="db-section" id="sec-rooms">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Rooms & Availability</h1>
+                        <p>Manage rates, block dates, and update individual room status</p>
+                    </div>
+                </div>
+
+                <!-- Room Rates Editor -->
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-tags"></i> Room Rates</h3>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div class="db-table-wrap">
+                            <table class="db-table db-rates-table">
+                                <thead><tr>
+                                    <th>Internal Key</th>
+                                    <th>Display Name</th>
+                                    <th>Rate / Night (USD)</th>
+                                    <th></th>
+                                </tr></thead>
+                                <tbody id="dbRatesBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Surcharges Editor -->
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-user-plus"></i> Surcharges</h3>
+                    </div>
+                    <div class="db-card-body">
+                        <div class="db-surcharge-row">
+                            <label for="dbExtraAdultFee">Extra Adult Fee (USD)</label>
+                            <input type="number" id="dbExtraAdultFee" class="db-rate-input" min="1" value="30">
+                        </div>
+                        <div class="db-surcharge-row">
+                            <label for="dbChildChargeAge">Child Charge Age (years)</label>
+                            <input type="number" id="dbChildChargeAge" class="db-rate-input" min="1" max="17" value="10">
+                        </div>
+                        <div class="db-surcharge-row">
+                            <label for="dbChildFee">Child Fee (USD)</label>
+                            <input type="number" id="dbChildFee" class="db-rate-input" min="1" value="30">
+                        </div>
+                        <div class="db-surcharge-row" style="justify-content:flex-end">
+                            <button class="db-rate-save" id="dbSurchargesSave" title="Save"><i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability Calendar -->
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-calendar-alt"></i> Availability Calendar</h3>
+                        <div class="db-cal-controls">
+                            <select id="dbCalRoomType" class="db-room-select"></select>
+                            <div class="db-cal-nav">
+                                <button id="dbCalPrev" aria-label="Previous month"><i class="fas fa-chevron-left"></i></button>
+                                <span id="dbCalMonth">March 2026</span>
+                                <button id="dbCalNext" aria-label="Next month"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="db-card-body">
+                        <div class="db-cal-legend">
+                            <span><span class="db-cal-dot available"></span> Available</span>
+                            <span><span class="db-cal-dot blocked"></span> Blocked</span>
+                            <span><span class="db-cal-dot past"></span> Past</span>
+                        </div>
+                        <div class="db-cal-grid" id="dbCalGrid"></div>
+                    </div>
+                </div>
+
+                <!-- Room Content Editor -->
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-image"></i> Room Content</h3>
+                        <select id="dbContentRoomType" class="db-room-select"></select>
+                    </div>
+                    <div class="db-card-body">
+                        <div id="dbContentEditor"></div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ====== MESSAGES SECTION ====== -->
+            <section class="db-section" id="sec-messages">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Messages</h1>
+                        <p>Guest enquiries, feedback and communications</p>
+                    </div>
+                    <button class="db-btn db-btn-sm" id="dbRefreshMessages" title="Re-check for new feedback from the website"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+                <div class="db-card">
+                    <div class="db-messages-list" id="dbAllMessages"></div>
+                </div>
+            </section>
+
+            <!-- ====== ANALYTICS SECTION ====== -->
+            <section class="db-section" id="sec-analytics">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Analytics</h1>
+                        <p>Revenue and performance insights</p>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="db-card db-section-filter">
+                    <div class="db-card-body">
+                        <div class="db-filter-pills" id="dbAnalyticsDateFilter">
+                            <button class="db-pill" data-range="7">7 Days</button>
+                            <button class="db-pill" data-range="30">30 Days</button>
+                            <button class="db-pill active" data-range="month">This Month</button>
+                            <button class="db-pill" data-range="all">All Time</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="db-analytics-stats" id="dbAnalyticsStats">
+                    <div class="db-analytics-card">
+                        <h4 id="analyticsRevenueLabel">Monthly Revenue</h4>
+                        <div class="db-analytics-num" id="analyticsRevenue">$0</div>
+                    </div>
+                    <div class="db-analytics-card">
+                        <h4 id="analyticsADRLabel">Avg. Daily Rate</h4>
+                        <div class="db-analytics-num" id="analyticsADR">$0</div>
+                    </div>
+                    <div class="db-analytics-card">
+                        <h4 id="analyticsRevPARLabel">RevPAR</h4>
+                        <div class="db-analytics-num" id="analyticsRevPAR">$0</div>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <h3 id="analyticsChartTitle">Revenue Trend (30 Days)</h3>
+                    </div>
+                    <div class="db-card-body">
+                        <div class="db-chart-wrap">
+                            <canvas id="dbRevChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== AUDIT & SITE SECTION ====== -->
+            <section class="db-section" id="sec-audit">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Audit & Site Activity</h1>
+                        <p>Admin actions and public website events</p>
+                    </div>
+                    <div class="db-header-actions">
+                        <button class="db-btn db-btn-outline" id="dbAuditExport">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Site Stats (5 cards) -->
+                <div class="db-stats-grid db-stats-grid-5" id="dbAuditStats">
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon green"><i class="fas fa-envelope"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="auditStatBooking">0</h3>
+                            <p>Booking Emails</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon blue"><i class="fas fa-comment-dots"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="auditStatContact">0</h3>
+                            <p>Contact Enquiries</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon gold"><i class="fas fa-search"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="auditStatAvail">0</h3>
+                            <p>Availability Checks</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon purple"><i class="fas fa-mouse-pointer"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="auditStatClicks">0</h3>
+                            <p>Book Now Clicks</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon" style="background:rgba(239,68,68,0.1);color:#ef4444"><i class="fas fa-file-pdf"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="auditStatPdf">0</h3>
+                            <p>PDF Downloads</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="db-charts-row">
+                    <!-- Site Activity Chart -->
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <h3>Site Activity</h3>
+                            <div class="db-chart-toggle" id="dbAuditChartToggle">
+                                <button class="active" data-range="7">7 Days</button>
+                                <button data-range="30">30 Days</button>
+                            </div>
+                        </div>
+                        <div class="db-card-body">
+                            <div class="db-chart-wrap">
+                                <canvas id="dbAuditChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Donut Charts -->
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <h3>Events Breakdown</h3>
+                        </div>
+                        <div class="db-card-body">
+                            <div class="db-donut-wrap">
+                                <div class="db-donut" id="dbAuditDonut">
+                                    <div class="db-donut-center">
+                                        <strong id="dbAuditDonutTotal">0</strong>
+                                        <span>Events</span>
+                                    </div>
+                                </div>
+                                <div class="db-donut-legend" id="dbAuditDonutLegend"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="db-card" style="margin-bottom:20px">
+                    <div class="db-card-body db-audit-filters">
+                        <div class="db-audit-filter-group">
+                            <span class="db-audit-filter-label">Date Range</span>
+                            <div class="db-filter-pills" id="dbAuditDateFilter">
+                                <button class="db-pill active" data-range="all">All</button>
+                                <button class="db-pill" data-range="today">Today</button>
+                                <button class="db-pill" data-range="7">7 Days</button>
+                                <button class="db-pill" data-range="30">30 Days</button>
+                            </div>
+                        </div>
+                        <div class="db-audit-filter-group">
+                            <span class="db-audit-filter-label">Source</span>
+                            <div class="db-filter-pills" id="dbAuditSourceFilter">
+                                <button class="db-pill active" data-source="all">All</button>
+                                <button class="db-pill" data-source="admin">Admin</button>
+                                <button class="db-pill" data-source="website">Website</button>
+                            </div>
+                        </div>
+                        <div class="db-audit-filter-group">
+                            <input type="text" class="db-audit-search" id="dbAuditSearch" placeholder="Search activity...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log Table -->
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <h3>Activity Log</h3>
+                        <span style="font-size:0.78rem;color:var(--db-text-light)" id="dbAuditCount">0 entries</span>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div class="db-table-wrap">
+                            <table class="db-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Source</th>
+                                        <th>Action</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dbAuditTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== REPORTS SECTION ====== -->
+            <section class="db-section" id="sec-reports">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Reports</h1>
+                        <p>Hotel performance summary and PDF export</p>
+                    </div>
+                    <div class="db-header-actions">
+                        <button class="db-btn db-btn-outline" id="dbPreviewReport">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button class="db-btn db-btn-primary" id="dbDownloadReport">
+                            <i class="fas fa-file-pdf"></i> Download PDF Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="db-card db-section-filter">
+                    <div class="db-card-body">
+                        <div class="db-filter-pills" id="dbReportDateFilter">
+                            <button class="db-pill" data-range="7">7 Days</button>
+                            <button class="db-pill" data-range="30">30 Days</button>
+                            <button class="db-pill active" data-range="month">This Month</button>
+                            <button class="db-pill" data-range="all">All Time</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Banner -->
+                <div class="db-report-banner">
+                    <div class="db-report-banner-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="db-report-banner-text">
+                        <h3>Hotel Performance Summary</h3>
+                        <p id="dbReportDateRange">Loading date range...</p>
+                    </div>
+                </div>
+
+                <!-- Stat Cards (6) -->
+                <div class="db-stats-grid db-stats-grid-6" id="dbReportStats">
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon green"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="reportRevenue">$0</h3>
+                            <p>Revenue</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon gold"><i class="fas fa-envelope"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="reportBookings">0</h3>
+                            <p>Bookings Received</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon blue"><i class="fas fa-eye"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="reportSiteVisits">0</h3>
+                            <p>Site Visits</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon purple"><i class="fas fa-mouse-pointer"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="reportBookClicks">0</h3>
+                            <p>Book Clicks</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon teal"><i class="fas fa-comment-dots"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="reportEnquiries">0</h3>
+                            <p>Enquiries</p>
+                        </div>
+                    </div>
+                    <div class="db-stat-card">
+                        <div class="db-stat-icon gold"><i class="fas fa-star"></i></div>
+                        <div class="db-stat-info">
+                            <h3 id="reportGuestRating">0</h3>
+                            <p>Guest Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Activity Chart -->
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3>Site Activity</h3>
+                    </div>
+                    <div class="db-card-body">
+                        <div class="db-chart-wrap">
+                            <canvas id="dbReportChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Contents Preview -->
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <h3>Report Contents</h3>
+                        <span style="font-size:0.78rem;color:var(--db-text-light)">Included in PDF download</span>
+                    </div>
+                    <div class="db-card-body">
+                        <div class="db-report-contents" id="dbReportContents"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== HOME PAGE SECTION ====== -->
+            <section class="db-section" id="sec-homepage">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Home Page</h1>
+                        <p>Manage the hero slider images and text on the public home page</p>
+                    </div>
+                    <div class="db-header-actions">
+                        <button class="db-btn db-btn-primary" id="dbAddSlide">
+                            <i class="fas fa-plus"></i> Add Slide
+                        </button>
+                    </div>
+                </div>
+
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-images"></i> Hero Slider</h3>
+                        <span style="font-size:0.78rem;color:var(--db-text-light)" id="dbSlideCount">0 slides</span>
+                    </div>
+                    <div class="db-slide-specs">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Image Specifications</strong>
+                            <p>Minimum <b>1200 x 600 px</b> &nbsp;|&nbsp; Landscape format (16:9 or wider) &nbsp;|&nbsp; JPEG, PNG, or WebP &nbsp;|&nbsp; Max <b>8 MB</b></p>
+                        </div>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div id="dbSlideList"></div>
+                    </div>
+                </div>
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-newspaper"></i> News Feeds</h3>
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <span style="font-size:0.78rem;color:var(--db-text-light)" id="dbNewsCount">0 items</span>
+                            <button class="db-btn db-btn-primary db-btn-sm" id="dbAddNews">
+                                <i class="fas fa-plus"></i> Add News
+                            </button>
+                        </div>
+                    </div>
+                    <div class="db-slide-specs">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Image Specifications</strong>
+                            <p>Minimum <b>1200 x 600 px</b> &nbsp;|&nbsp; Landscape format &nbsp;|&nbsp; JPEG, PNG, or WebP &nbsp;|&nbsp; Max <b>8 MB</b></p>
+                        </div>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div id="dbNewsList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== OFFERS PAGE SECTION ====== -->
+            <section class="db-section" id="sec-offers">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Offers Page</h1>
+                        <p>Edit facility cards and special packages shown on the public Offers page</p>
+                    </div>
+                </div>
+
+                <!-- Facilities -->
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-concierge-bell"></i> Facilities</h3>
+                        <span style="font-size:0.78rem;color:var(--db-text-light)">4 cards — click the camera icon to change a photo</span>
+                    </div>
+                    <div class="db-slide-specs">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Image Specifications</strong>
+                            <p>Minimum <b>600 x 400 px</b> &nbsp;|&nbsp; Landscape format &nbsp;|&nbsp; JPEG, PNG, or WebP &nbsp;|&nbsp; Max <b>8 MB</b></p>
+                        </div>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div id="dbFacilitiesList"></div>
+                    </div>
+                </div>
+
+                <!-- Packages -->
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-gift"></i> Special Packages</h3>
+                        <span style="font-size:0.78rem;color:var(--db-text-light)">3 cards — click the camera icon to change a photo</span>
+                    </div>
+                    <div class="db-slide-specs">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Image Specifications</strong>
+                            <p>Minimum <b>600 x 400 px</b> &nbsp;|&nbsp; Landscape format &nbsp;|&nbsp; JPEG, PNG, or WebP &nbsp;|&nbsp; Max <b>8 MB</b></p>
+                        </div>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div id="dbPackagesList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== ABOUT US SECTION ====== -->
+            <section class="db-section" id="sec-about">
+                <div class="db-main-header">
+                    <div>
+                        <h1>About Us Page</h1>
+                        <p>Edit the Location &amp; Surroundings and Management Team shown on the About Us page</p>
+                    </div>
+                    <div class="db-header-actions">
+                        <button class="db-btn db-btn-gold db-btn-sm" id="dbAddSurroundingBtn">
+                            <i class="fas fa-plus"></i> Add Location
+                        </button>
+                        <button class="db-btn db-btn-primary db-btn-sm" id="dbAddMgmtBtn">
+                            <i class="fas fa-plus"></i> Add Member
+                        </button>
+                    </div>
+                </div>
+
+                <div class="db-card" style="margin-bottom:24px">
+                    <div class="db-card-header">
+                        <div>
+                            <h3><i class="fas fa-map-marker-alt"></i> Location &amp; Surroundings</h3>
+                            <p style="font-size:0.82rem;color:#888;margin-top:2px">Edit nearby attractions shown on the About Us page. Use Font Awesome icon classes (e.g. <code>fa-plane</code>, <code>fa-leaf</code>).</p>
+                        </div>
+                    </div>
+                    <div class="db-card-body">
+                        <div id="dbSurroundingsList"></div>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <div>
+                            <h3><i class="fas fa-id-badge"></i> Management Team</h3>
+                            <p style="font-size:0.82rem;color:#888;margin-top:2px">Changes save to the About Us page after clicking <strong>Save to Site</strong></p>
+                        </div>
+                    </div>
+                    <div class="db-card-body" style="padding:0">
+                        <div id="dbMgmtTeamList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== DINING MENU SECTION ====== -->
+            <section class="db-section" id="sec-dining">
+                <div class="db-main-header">
+                    <div>
+                        <h1>Dining Menu</h1>
+                        <p>Upload your hotel menu file — it will open when guests click <strong>"Hotel Menu"</strong> on the Dining page</p>
+                    </div>
+                </div>
+
+                <div class="db-card">
+                    <div class="db-card-header">
+                        <h3><i class="fas fa-file-alt"></i> Menu Files</h3>
+                        <span style="font-size:0.78rem;color:var(--db-text-light)">PDF, PNG or JPEG &nbsp;·&nbsp; max 100 MB each</span>
+                    </div>
+                    <div class="db-card-body" id="dbMenuFilesList" style="padding:8px 24px 24px">
+                        <!-- Rows injected by dashboard.js renderDiningPage() -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- PDF Preview Modal -->
+        <div class="db-pdf-preview-overlay" id="dbPdfPreviewOverlay">
+            <div class="db-pdf-preview-modal">
+                <div class="db-pdf-preview-toolbar">
+                    <span class="db-pdf-preview-title"><i class="fas fa-file-pdf"></i> Report Preview</span>
+                    <div class="db-pdf-preview-actions">
+                        <button class="db-btn db-btn-primary db-btn-sm" id="dbPreviewDownload">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="db-pdf-preview-close" id="dbPreviewClose" aria-label="Close preview">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <iframe class="db-pdf-preview-frame" id="dbPdfPreviewFrame"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/site-config.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
