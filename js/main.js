@@ -593,7 +593,7 @@ if (contactForm) {
 }
 
 // All other forms (availability checker)
-document.querySelectorAll('form:not(#contactForm):not(#bookingModalForm)').forEach(form => {
+document.querySelectorAll('form:not(#contactForm):not(#bookingModalForm):not(#inquiryForm)').forEach(form => {
     form.addEventListener('submit', e => {
         e.preventDefault();
         // Track availability check forms
@@ -2508,6 +2508,166 @@ if (rcConfirmBtn) {
                 closeFeedback();
                 setTimeout(resetForm, 400);
             }, 3000);
+        });
+    }
+})();
+
+/* =============================================
+   Inquiry Widget
+   ============================================= */
+(function () {
+    var inqBtn     = document.getElementById('inquiryBtn');
+    var inqOverlay = document.getElementById('inquiryOverlay');
+    var inqModal   = document.getElementById('inquiryModal');
+    var inqClose   = document.getElementById('inquiryClose');
+    var inqForm    = document.getElementById('inquiryForm');
+    var inqSuccess = document.getElementById('inquirySuccess');
+    var inqSubmit  = document.getElementById('inqSubmitBtn');
+
+    if (!inqBtn || !inqModal) return;
+
+    function openInquiry() {
+        inqOverlay && inqOverlay.classList.add('active');
+        inqModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInquiry() {
+        inqOverlay && inqOverlay.classList.remove('active');
+        inqModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function resetInquiry() {
+        var nameEl    = document.getElementById('inqName');
+        var emailEl   = document.getElementById('inqEmail');
+        var phoneEl   = document.getElementById('inqPhone');
+        var subjectEl = document.getElementById('inqSubject');
+        var msgEl     = document.getElementById('inqMessage');
+        if (nameEl)    nameEl.value    = '';
+        if (emailEl)   emailEl.value   = '';
+        if (phoneEl)   phoneEl.value   = '';
+        if (subjectEl) subjectEl.value = '';
+        if (msgEl)     msgEl.value     = '';
+        if (inqForm)    inqForm.style.display    = '';
+        if (inqSuccess) inqSuccess.style.display = 'none';
+        if (inqSubmit) {
+            inqSubmit.disabled = false;
+            inqSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Send Inquiry';
+        }
+    }
+
+    inqBtn.addEventListener('click', openInquiry);
+    if (inqClose)   inqClose.addEventListener('click', closeInquiry);
+    if (inqOverlay) inqOverlay.addEventListener('click', closeInquiry);
+
+    if (inqSubmit) {
+        inqSubmit.addEventListener('click', function () {
+            var name    = (document.getElementById('inqName')    && document.getElementById('inqName').value.trim())    || '';
+            var email   = (document.getElementById('inqEmail')   && document.getElementById('inqEmail').value.trim())   || '';
+            var phone   = (document.getElementById('inqPhone')   && document.getElementById('inqPhone').value.trim())   || 'Not provided';
+            var subject = (document.getElementById('inqSubject') && document.getElementById('inqSubject').value.trim()) || 'General Inquiry';
+            var msg     = (document.getElementById('inqMessage') && document.getElementById('inqMessage').value.trim()) || '';
+
+            if (!name || !email || !msg) {
+                inqModal.classList.add('inq-shake');
+                setTimeout(function () { inqModal.classList.remove('inq-shake'); }, 400);
+                return;
+            }
+
+            function showInqSuccess() {
+                if (inqForm)    inqForm.style.display    = 'none';
+                if (inqSuccess) inqSuccess.style.display = '';
+                setTimeout(function () {
+                    closeInquiry();
+                    setTimeout(resetInquiry, 400);
+                }, 3000);
+            }
+
+            // Save to dashboard messages
+            try {
+                var dashStore = JSON.parse(localStorage.getItem('lvh_dashboard') || 'null');
+                var inqDate = new Date().toISOString();
+                var msgBody = 'Inquiry Type: ' + subject + '\nName: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\n\nMessage:\n' + msg;
+                var newMsg = {
+                    id: Date.now(),
+                    sender: name,
+                    subject: 'Inquiry: ' + subject + ' — ' + name,
+                    preview: msg.substring(0, 80) + (msg.length > 80 ? '...' : ''),
+                    body: msgBody,
+                    time: inqDate,
+                    read: false,
+                    _type: 'inquiry',
+                    showOnHomepage: false,
+                    _country: ''
+                };
+                if (dashStore) {
+                    if (!dashStore.messages) dashStore.messages = [];
+                    dashStore.messages.unshift(newMsg);
+                    localStorage.setItem('lvh_dashboard', JSON.stringify(dashStore));
+                }
+            } catch (e) {
+                console.error('[LVH Inquiry] Failed to save to dashboard:', e);
+            }
+
+            lvhTrackEvent('contact_enquiry', 'Inquiry: ' + subject + ' | ' + name);
+
+            // Send via Web3Forms if configured
+            if (typeof WEB3FORMS_KEY !== 'undefined' && WEB3FORMS_KEY !== 'YOUR_ACCESS_KEY') {
+                inqSubmit.disabled = true;
+                inqSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+                var ln  = '\n';
+                var div = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+                var sep = '──────────────────────────────────────────';
+                var cfDate = new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+                var body = div + ln
+                    + '       LAKE VICTORIA HOTEL' + ln
+                    + '       Guest Inquiry' + ln
+                    + div + ln + ln
+                    + '  SENDER DETAILS' + ln + sep + ln
+                    + '  Name     │  ' + name + ln
+                    + '  Email    │  ' + email + ln
+                    + '  Phone    │  ' + phone + ln
+                    + sep + ln + ln
+                    + '  INQUIRY' + ln + sep + ln
+                    + '  Type     │  ' + subject + ln
+                    + '  Received │  ' + cfDate + ln
+                    + sep + ln + ln
+                    + '  MESSAGE' + ln + sep + ln
+                    + '  ' + msg.replace(/\n/g, '\n  ') + ln
+                    + sep + ln + ln
+                    + div + ln
+                    + '  Lake Victoria Hotel · Entebbe, Uganda' + ln
+                    + '  Tel: +256 312 310 100 · WhatsApp: +256 772 268 040' + ln
+                    + '  reservations@lvhotel.co.ug' + ln
+                    + div;
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: WEB3FORMS_KEY,
+                        subject:    'Guest Inquiry: ' + subject + ' — ' + name,
+                        from_name:  'Lake Victoria Hotel Website',
+                        replyto:    email,
+                        message:    body
+                    })
+                }).then(function (r) { return r.json(); })
+                  .then(function (d) {
+                      if (d.success) { showInqSuccess(); }
+                      else { throw new Error(d.message); }
+                  }).catch(function () {
+                      inqSubmit.disabled = false;
+                      inqSubmit.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed — Try Again';
+                      setTimeout(function () {
+                          inqSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Send Inquiry';
+                      }, 3000);
+                  });
+            } else {
+                showInqSuccess();
+            }
         });
     }
 })();

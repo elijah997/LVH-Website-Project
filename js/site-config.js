@@ -1,7 +1,7 @@
 /* =============================================
    Lake Victoria Hotel — Site Configuration
    ==============================================
-   Auto-generated from Dashboard on Tuesday, 10 March 2026
+   Auto-generated from Dashboard on Tuesday, 24 March 2026
    ============================================= */
 
 window.LVH_SITE_CONFIG = {
@@ -212,15 +212,15 @@ window.LVH_SITE_CONFIG = {
     "managementTeam": [
         {
             "id": "mgmt1",
-            "name": "Mark S",
+            "name": "David Ssekabira",
             "role": "General Manager",
             "bio": "With over 20 years in luxury hospitality, David leads our team with passion and a commitment to world-class service.",
             "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80"
         },
         {
             "id": "mgmt2",
-            "name": "Pauline Kirabo",
-            "role": "Financial Controller",
+            "name": "Grace Namukasa",
+            "role": "Operations Manager",
             "bio": "Grace ensures every department operates seamlessly, delivering the flawless experiences our guests expect.",
             "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80"
         },
@@ -289,6 +289,14 @@ window.LVH_SITE_CONFIG = {
             "description": "The historic site where the first missionaries arrived by water — a landmark of Uganda's cultural heritage."
         }
     ],
+    "menuFiles": {
+        "food": null,
+        "drinks": null,
+        "snacks": null,
+        "desserts": null,
+        "mains": null,
+        "starters": null
+    },
     "featuredTestimonials": [
         {
             "name": "Good Customer care",

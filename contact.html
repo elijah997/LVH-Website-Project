@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Lake Victoria Hotel</title>
     <meta name="description" content="Contact Lake Victoria Hotel — reservations, event enquiries and directions to Entebbe, Uganda.">
-    <meta name="theme-color" content="#2c6e49">
+    <meta name="theme-color" content="#1a5c8a">
     <meta property="og:title" content="Contact Us | Lake Victoria Hotel">
     <meta property="og:description" content="Contact Lake Victoria Hotel — reservations, event enquiries and directions to Entebbe, Uganda.">
     <meta property="og:type" content="website">
@@ -33,7 +33,7 @@
             <div class="top-bar-left"><span><i class="fas fa-map-marker-alt"></i> P.O.BOX 15, ENTEBBE &nbsp;|&nbsp; Plot 23-31, Circular Road, Entebbe</span></div>
             <div class="top-bar-right">
                 <span><i class="fas fa-phone"></i> <a href="tel:+256312310100" class="top-bar-tel">+256-312310100</a> / <a href="tel:+256414351600" class="top-bar-tel">+256-414-351600</a></span>
-                <span><i class="fas fa-fax"></i> Fax: +256-312310404</span>
+                <span><i class="fab fa-whatsapp"></i> <a href="https://wa.me/256772268040" target="_blank" rel="noopener" class="top-bar-tel">+256-772268040</a></span>
             </div>
         </div>
     </div>
@@ -53,7 +53,14 @@
                                 <li><a href="about.html#management">Management Team</a></li>
                             </ul>
                         </li>
-                        <li><a href="offers.html" class="nav-link">Offers</a></li>
+                        <li class="has-dropdown">
+                            <a href="offers.html" class="nav-link">Offers <i class="fas fa-chevron-down fa-xs"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="offers.html">Offers &amp; Packages</a></li>
+                                <li><a href="dining.html">Dining</a></li>
+                                <li><a href="gallery.html">Gallery</a></li>
+                            </ul>
+                        </li>
                         <li class="has-dropdown">
                             <a href="bookings.html" class="nav-link">Bookings <i class="fas fa-chevron-down fa-xs"></i></a>
                             <ul class="dropdown">
@@ -66,14 +73,6 @@
                                 <li><a href="bookings.html#junior">Junior Suite</a></li>
                             </ul>
                         </li>
-                        <li class="has-dropdown">
-                            <a href="dining.html" class="nav-link">Dining <i class="fas fa-chevron-down fa-xs"></i></a>
-                            <ul class="dropdown">
-                                <li><a href="dining.html#buffet">Buffet Restaurant</a></li>
-                                <li><a href="dining.html#menu">Menu</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
                         <li><a href="contact.html" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
@@ -90,7 +89,7 @@
     </header>
 
     <!-- Page Banner -->
-    <section class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe2fa?w=1600&q=80')">
+    <section class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1600&q=80')">
         <div class="page-banner-overlay"></div>
         <div class="container">
             <div class="page-banner-content">
@@ -105,134 +104,108 @@
         </div>
     </section>
 
-    <!-- Contact Info Cards -->
-    <section class="contact-cards-section" style="background: var(--cream); padding: 80px 0 0;">
+    <!-- Contact Quick Strip -->
+    <section class="contact-quick-strip">
         <div class="container">
-            <div class="section-header rv">
-                <span class="label">Reach Out</span>
-                <h2>Get In Touch</h2>
-                <p>Our team is ready to assist you with reservations, enquiries and event planning</p>
-            </div>
-            <div class="contact-info-grid rv">
-                <div class="contact-info-card">
-                    <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h4>Our Location</h4>
-                    <a href="https://www.google.com/maps/place/Lake+Victoria+Hotel/@0.0612,32.4435,17z" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><p>Plot 23-31, Circular Road<br>P.O. Box 15, Entebbe<br>Uganda, East Africa</p></a>
-                    <a href="https://www.google.com/maps/place/Lake+Victoria+Hotel/@0.0612,32.4435,17z" target="_blank" rel="noopener" class="ci-link">Get Directions <i class="fas fa-arrow-right"></i></a>
+            <div class="cqs-grid">
+                <div class="cqs-item">
+                    <div class="cqs-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="cqs-body">
+                        <span class="cqs-label">Address</span>
+                        <a href="https://www.google.com/maps/place/Lake+Victoria+Hotel/@0.0612,32.4435,17z" target="_blank" rel="noopener" class="cqs-value">Plot 23-31, Circular Road, Entebbe</a>
+                        <span class="cqs-sub">P.O. Box 15, Entebbe, Uganda</span>
+                    </div>
                 </div>
-                <div class="contact-info-card">
-                    <div class="ci-icon"><i class="fas fa-phone-alt"></i></div>
-                    <h4>Phone</h4>
-                    <p><a href="tel:+256312310100" style="color:inherit;text-decoration:none">+256-312310100</a><br><a href="tel:+256414351600" style="color:inherit;text-decoration:none">+256-414-351600</a><br>Fax: +256-312310404<br>WhatsApp: <a href="https://wa.me/256772268040" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">+256-772268040</a></p>
-                    <a href="tel:+256312310100" class="ci-link">Call Now <i class="fas fa-arrow-right"></i></a>
+                <div class="cqs-item">
+                    <div class="cqs-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="cqs-body">
+                        <span class="cqs-label">Phone</span>
+                        <a href="tel:+256312310100" class="cqs-value">+256-312 310 100</a>
+                        <a href="tel:+256414351600" class="cqs-sub">+256-414 351 600</a>
+                    </div>
                 </div>
-                <div class="contact-info-card">
-                    <div class="ci-icon"><i class="fas fa-envelope"></i></div>
-                    <h4>Email Us</h4>
-                    <p>reservations@lvhotel.co.ug<br>info@lvhotel.co.ug<br>events@lvhotel.co.ug</p>
-                    <a href="mailto:reservations@lvhotel.co.ug" class="ci-link">Send Email <i class="fas fa-arrow-right"></i></a>
+                <div class="cqs-item">
+                    <div class="cqs-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="cqs-body">
+                        <span class="cqs-label">WhatsApp</span>
+                        <a href="https://wa.me/256772268040" target="_blank" rel="noopener" class="cqs-value">+256-772 268 040</a>
+                        <span class="cqs-sub">Chat with us anytime</span>
+                    </div>
                 </div>
-                <div class="contact-info-card">
-                    <div class="ci-icon"><i class="fas fa-clock"></i></div>
-                    <h4>Reception Hours</h4>
-                    <p>Front Desk: 24 hours, 7 days<br>Reservations: 8am – 8pm<br>Events Office: Mon–Fri, 9am–5pm</p>
-                    <a href="bookings.html" class="ci-link">Book a Room <i class="fas fa-arrow-right"></i></a>
+                <div class="cqs-item">
+                    <div class="cqs-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="cqs-body">
+                        <span class="cqs-label">Email</span>
+                        <a href="mailto:reservations@lvhotel.co.ug" class="cqs-value">reservations@lvhotel.co.ug</a>
+                        <span class="cqs-sub">Front Desk: 24 hrs / 7 days</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form & Map -->
-    <section class="contact-main-section" style="background: var(--cream); padding: 60px 0 80px;">
+    <!-- Social Media Section -->
+    <section class="contact-social-section">
         <div class="container">
-            <div class="contact-main-grid">
-
-                <!-- Form -->
-                <div class="contact-form-wrap rv">
-                    <div class="contact-form-header">
-                        <span class="label">Send a Message</span>
-                        <h3>We'd Love to Hear From You</h3>
-                        <p>Whether it's a reservation, an event enquiry, or simply a question — fill in the form and a member of our team will respond within 24 hours.</p>
+            <div class="contact-social-header">
+                <span class="label">Stay Connected</span>
+                <h2>Follow Us on Social Media</h2>
+            </div>
+            <div class="contact-social-grid">
+                <a href="https://www.facebook.com/LakeVictoriaHotelEntebbe" target="_blank" rel="noopener" class="csm-card csm-facebook">
+                    <div class="csm-icon"><i class="fab fa-facebook-f"></i></div>
+                    <div class="csm-body">
+                        <span class="csm-platform">Facebook</span>
+                        <span class="csm-handle">@LakeVictoriaHotelEntebbe</span>
                     </div>
-                    <form class="contact-form" id="contactForm">
-                        <div class="cf-row">
-                            <div class="cf-group">
-                                <label for="cf-name">Full Name</label>
-                                <input type="text" id="cf-name" name="name" placeholder="Your full name" required>
-                            </div>
-                            <div class="cf-group">
-                                <label for="cf-email">Email Address</label>
-                                <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
-                            </div>
-                        </div>
-                        <div class="cf-row">
-                            <div class="cf-group">
-                                <label for="cf-phone">Phone Number</label>
-                                <input type="tel" id="cf-phone" name="phone" placeholder="+256 ...">
-                            </div>
-                            <div class="cf-group">
-                                <label for="cf-subject">Subject</label>
-                                <select id="cf-subject" name="subject">
-                                    <option value="">Select a subject</option>
-                                    <option value="reservation">Room Reservation</option>
-                                    <option value="event">Event &amp; Conference</option>
-                                    <option value="dining">Dining Enquiry</option>
-                                    <option value="feedback">Feedback</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="cf-group">
-                            <label for="cf-message">Your Message</label>
-                            <textarea id="cf-message" name="message" rows="6" placeholder="Tell us how we can help you..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-gold btn-wide" id="cfSubmitBtn">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                        <div class="cf-success" id="cfSuccess" style="display:none;">
-                            <i class="fas fa-check-circle"></i> Thank you! Your message has been sent. We'll be in touch shortly.
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Aside info -->
-                <aside class="contact-aside rv">
-                    <div class="contact-aside-inner">
-                        <div class="contact-aside-img">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Lake Victoria Hotel" loading="lazy">
-                        </div>
-                        <div class="contact-aside-body">
-                            <h4>Finding Us</h4>
-                            <p>We are situated on the shores of Lake Victoria in Entebbe, just 3.1 km from Entebbe International Airport — a natural gateway to Uganda.</p>
-                            <ul class="contact-aside-list">
-                                <li><i class="fas fa-plane-arrival"></i> <span>3.1 km from Entebbe Airport</span></li>
-                                <li><i class="fas fa-car"></i> <span>45 min drive from Kampala city centre</span></li>
-                                <li><i class="fas fa-water"></i> <span>Lakefront access &amp; garden grounds</span></li>
-                                <li><i class="fas fa-concierge-bell"></i> <span>Airport transfers available on request</span></li>
-                            </ul>
-                            <div class="contact-aside-social">
-                                <span>Follow us:</span>
-                                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="#" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
-                            </div>
-                        </div>
+                    <i class="fas fa-arrow-right csm-arrow"></i>
+                </a>
+                <a href="https://twitter.com/LakeVictoriaHo1" target="_blank" rel="noopener" class="csm-card csm-twitter">
+                    <div class="csm-icon"><i class="fab fa-twitter"></i></div>
+                    <div class="csm-body">
+                        <span class="csm-platform">Twitter / X</span>
+                        <span class="csm-handle">@LakeVictoriaHo1</span>
                     </div>
-                </aside>
-
+                    <i class="fas fa-arrow-right csm-arrow"></i>
+                </a>
+                <a href="#" class="csm-card csm-instagram">
+                    <div class="csm-icon"><i class="fab fa-instagram"></i></div>
+                    <div class="csm-body">
+                        <span class="csm-platform">Instagram</span>
+                        <span class="csm-handle">@lakevictoriahotel</span>
+                    </div>
+                    <i class="fas fa-arrow-right csm-arrow"></i>
+                </a>
+                <a href="https://wa.me/256772268040" target="_blank" rel="noopener" class="csm-card csm-whatsapp">
+                    <div class="csm-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="csm-body">
+                        <span class="csm-platform">WhatsApp</span>
+                        <span class="csm-handle">+256-772 268 040</span>
+                    </div>
+                    <i class="fas fa-arrow-right csm-arrow"></i>
+                </a>
+                <a href="#" class="csm-card csm-linkedin">
+                    <div class="csm-icon"><i class="fab fa-linkedin-in"></i></div>
+                    <div class="csm-body">
+                        <span class="csm-platform">LinkedIn</span>
+                        <span class="csm-handle">Lake Victoria Hotel</span>
+                    </div>
+                    <i class="fas fa-arrow-right csm-arrow"></i>
+                </a>
+                <a href="#" class="csm-card csm-tripadvisor" id="sfTripAdvisorContact">
+                    <div class="csm-icon"><i class="fab fa-tripadvisor"></i></div>
+                    <div class="csm-body">
+                        <span class="csm-platform">TripAdvisor</span>
+                        <span class="csm-handle">Rate &amp; Review Us</span>
+                    </div>
+                    <i class="fas fa-arrow-right csm-arrow"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Map Section -->
     <section class="map-section">
-        <div class="map-header">
-            <div class="container">
-                <span class="label" style="color:var(--gold)">Entebbe, Uganda</span>
-                <h3>Find Us on the Map</h3>
-            </div>
-        </div>
         <div class="map-embed">
             <iframe
                 src="https://maps.google.com/maps?q=Lake+Victoria+Hotel+Entebbe+Uganda&t=&z=16&ie=UTF8&iwloc=&output=embed"
@@ -250,8 +223,8 @@
                 <p>A 4-star hotel in Entebbe, Uganda, with a rich history dating back to 1948. World-class amenities on the shores of Lake Victoria.</p>
                 <div class="footer-social">
                     <a href="https://wa.me/256772268040" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/LakeVictoriaHotelEntebbe" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/LakeVictoriaHo1" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     <a href="#" aria-label="TripAdvisor" id="sfTripAdvisor"><img src="assets/tripadvisor-badge.png" alt="TripAdvisor" style="width:20px;height:20px;object-fit:contain;"></a>
                 </div>
             </div>
@@ -324,6 +297,40 @@
             <i class="fas fa-check-circle"></i>
             <h3>Thank you!</h3>
             <p>Your feedback has been received.</p>
+        </div>
+    </div>
+
+    <!-- Inquiry Widget -->
+    <button class="inq-float-btn" id="inquiryBtn" title="Send an Inquiry"><i class="fas fa-envelope-open-text"></i></button>
+    <div class="inq-overlay" id="inquiryOverlay"></div>
+    <div class="inq-modal" id="inquiryModal">
+        <button class="inq-close" id="inquiryClose">&times;</button>
+        <div class="inq-content" id="inquiryForm">
+            <div class="inq-header">
+                <div class="inq-header-icon"><i class="fas fa-envelope-open-text"></i></div>
+                <div class="inq-header-text">
+                    <h3>Send an Inquiry</h3>
+                    <p>We respond within 24 hours</p>
+                </div>
+            </div>
+            <input type="text" id="inqName" placeholder="Full Name *">
+            <input type="email" id="inqEmail" placeholder="Email Address *">
+            <input type="tel" id="inqPhone" placeholder="Phone Number">
+            <select id="inqSubject">
+                <option value="">Type of Inquiry</option>
+                <option value="Room Reservation">Room Reservation</option>
+                <option value="Event &amp; Conference">Event &amp; Conference</option>
+                <option value="Dining Enquiry">Dining Enquiry</option>
+                <option value="General Information">General Information</option>
+                <option value="Other">Other</option>
+            </select>
+            <textarea id="inqMessage" rows="4" placeholder="Your message *"></textarea>
+            <button class="inq-submit" id="inqSubmitBtn"><i class="fas fa-paper-plane"></i> Send Inquiry</button>
+        </div>
+        <div class="inq-success" id="inquirySuccess" style="display:none">
+            <i class="fas fa-check-circle"></i>
+            <h3>Inquiry Sent!</h3>
+            <p>Thank you! Our team will get back to you within 24 hours.</p>
         </div>
     </div>
 
